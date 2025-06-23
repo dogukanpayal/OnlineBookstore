@@ -20,6 +20,8 @@ const BookList = ({ books = [], nextPageExists = false, onLoadMore }) => {
             title={book.title}
             author={book.author_name}
             coverId={book.cover_i}
+            price={book.price}
+            keyProp={book.key}
           />
         ))}
       </div>

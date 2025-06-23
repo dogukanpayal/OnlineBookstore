@@ -7,22 +7,56 @@
 .App-header {
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   color: white;
-  padding: 40px 0;
-  text-align: center;
+  padding: 20px 0;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-.App-header h1 {
+.header-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.header-left h1 {
   font-size: 2.5rem;
   font-weight: 700;
   margin-bottom: 10px;
   text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
 }
 
-.App-header p {
+.header-left p {
   font-size: 1.2rem;
   opacity: 0.9;
   margin: 0;
+}
+
+.header-nav {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+}
+
+.nav-link {
+  color: white;
+  text-decoration: none;
+  font-size: 16px;
+  font-weight: 500;
+  padding: 10px 16px;
+  border-radius: 6px;
+  transition: background-color 0.3s ease;
+}
+
+.nav-link:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.cart-link {
+  background-color: rgba(255, 255, 255, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.cart-link:hover {
+  background-color: rgba(255, 255, 255, 0.3);
 }
 
 .App-main {
@@ -68,16 +102,27 @@
 }
 
 @media (max-width: 768px) {
-  .App-header {
-    padding: 30px 0;
+  .header-content {
+    flex-direction: column;
+    gap: 20px;
+    text-align: center;
   }
   
-  .App-header h1 {
+  .header-left h1 {
     font-size: 2rem;
   }
   
-  .App-header p {
+  .header-left p {
     font-size: 1rem;
+  }
+  
+  .header-nav {
+    gap: 15px;
+  }
+  
+  .nav-link {
+    font-size: 14px;
+    padding: 8px 12px;
   }
   
   .App-main {
@@ -86,8 +131,13 @@
 }
 
 @media (max-width: 480px) {
-  .App-header h1 {
+  .header-left h1 {
     font-size: 1.8rem;
+  }
+  
+  .header-nav {
+    flex-direction: column;
+    gap: 10px;
   }
   
   .App-main {

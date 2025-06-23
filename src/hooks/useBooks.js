@@ -31,13 +31,14 @@ const useBooks = (searchQuery, page = 1) => {
         
         const data = await response.json();
         
-        // Parse response.docs and map to our desired format
+        // Parse response.docs and map to our desired format with random price
         const mappedBooks = data.docs.map(doc => ({
           key: doc.key,
           title: doc.title,
           author_name: doc.author_name ? doc.author_name[0] : 'Unknown Author',
           cover_i: doc.cover_i,
-          first_publish_year: doc.first_publish_year
+          first_publish_year: doc.first_publish_year,
+          price: Math.floor(Math.random() * 50) + 10 // Random price between 10-60 TL
         }));
         
         // If it's page 1, replace books, otherwise append

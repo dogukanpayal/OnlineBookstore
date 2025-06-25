@@ -17,7 +17,8 @@ namespace OnlineBookStore.API.Mappers
                 Yazar = kitap.Yazar,
                 Fiyat = kitap.Fiyat,
                 Kategori = kitap.Kategori,
-                KapakResmiUrl = kitap.KapakResmiUrl
+                KapakResmiUrl = kitap.KapakResmiUrl,
+                Aciklama = kitap.Aciklama
             };
         }
 
@@ -30,7 +31,8 @@ namespace OnlineBookStore.API.Mappers
                 Yazar = dto.Yazar,
                 Fiyat = dto.Fiyat,
                 Kategori = dto.Kategori,
-                KapakResmiUrl = dto.KapakResmiUrl
+                KapakResmiUrl = dto.KapakResmiUrl,
+                Aciklama = dto.Aciklama
             };
         }
     }

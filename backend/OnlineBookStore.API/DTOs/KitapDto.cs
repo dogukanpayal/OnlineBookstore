@@ -11,5 +11,6 @@ namespace OnlineBookStore.API.DTOs
         public decimal Fiyat { get; set; }
         public string Kategori { get; set; }
         public string KapakResmiUrl { get; set; }
+        public string Aciklama { get; set; }
     }
 } 

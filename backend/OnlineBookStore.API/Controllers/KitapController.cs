@@ -72,6 +72,7 @@ namespace OnlineBookStore.API.Controllers
         /// <summary>
         /// Kitap detayını getirir (Tüm roller erişebilir).
         /// </summary>
+        [AllowAnonymous]
         [HttpGet("{id}")]
         [Authorize]
         public async Task<IActionResult> GetById(int id)

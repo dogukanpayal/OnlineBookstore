@@ -23,6 +23,8 @@ builder.Services.AddScoped<ISepetService, SepetService>();
 builder.Services.AddScoped<ISiparisRepository, SiparisRepository>();
 builder.Services.AddScoped<ISiparisService, SiparisService>();
 builder.Services.AddSingleton<TokenService>();
+builder.Services.AddScoped<IYorumRepository, YorumRepository>();
+builder.Services.AddScoped<IYorumService, YorumService>();
 
 // CORS ayarı (sadece frontend'e açık)
 builder.Services.AddCors(options =>

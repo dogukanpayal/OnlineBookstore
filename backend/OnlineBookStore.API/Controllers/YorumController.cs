@@ -24,8 +24,8 @@ namespace OnlineBookStore.API.Controllers
         /// <summary>
         /// Bir kitaba ait tüm yorumları getirir.
         /// </summary>
-        [HttpGet("kitap/{kitapId}")]
         [AllowAnonymous]
+        [HttpGet("kitap/{kitapId}")]
         public async Task<IActionResult> GetByKitapId(int kitapId)
         {
             var yorumlar = await _yorumService.GetByKitapIdAsync(kitapId);

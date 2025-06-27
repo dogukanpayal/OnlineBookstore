@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\payal\\Desktop\\deneme 1\\backend\\OnlineBookstore.API\\OnlineBookStore.API.csproj": {}
+    "C:\\Users\\payal\\Desktop\\deneme 1\\backend\\OnlineBookStore.API\\OnlineBookStore.API.csproj": {}
   },
   "projects": {
-    "C:\\Users\\payal\\Desktop\\deneme 1\\backend\\OnlineBookstore.API\\OnlineBookStore.API.csproj": {
+    "C:\\Users\\payal\\Desktop\\deneme 1\\backend\\OnlineBookStore.API\\OnlineBookStore.API.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\payal\\Desktop\\deneme 1\\backend\\OnlineBookstore.API\\OnlineBookStore.API.csproj",
+        "projectUniqueName": "C:\\Users\\payal\\Desktop\\deneme 1\\backend\\OnlineBookStore.API\\OnlineBookStore.API.csproj",
         "projectName": "OnlineBookStore.API",
-        "projectPath": "C:\\Users\\payal\\Desktop\\deneme 1\\backend\\OnlineBookstore.API\\OnlineBookStore.API.csproj",
+        "projectPath": "C:\\Users\\payal\\Desktop\\deneme 1\\backend\\OnlineBookStore.API\\OnlineBookStore.API.csproj",
         "packagesPath": "C:\\Users\\payal\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\payal\\Desktop\\deneme 1\\backend\\OnlineBookstore.API\\obj\\",
+        "outputPath": "C:\\Users\\payal\\Desktop\\deneme 1\\backend\\OnlineBookStore.API\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

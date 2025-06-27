@@ -1,10 +1,3 @@
-C:\Users\payal\Desktop\deneme 1\backend\OnlineBookStore.API\obj\Debug\net9.0\OnlineBookStore.API.csproj.AssemblyReference.cache
-C:\Users\payal\Desktop\deneme 1\backend\OnlineBookStore.API\obj\Debug\net9.0\OnlineBookStore.API.GeneratedMSBuildEditorConfig.editorconfig
-C:\Users\payal\Desktop\deneme 1\backend\OnlineBookStore.API\obj\Debug\net9.0\OnlineBookStore.API.AssemblyInfoInputs.cache
-C:\Users\payal\Desktop\deneme 1\backend\OnlineBookStore.API\obj\Debug\net9.0\OnlineBookStore.API.AssemblyInfo.cs
-C:\Users\payal\Desktop\deneme 1\backend\OnlineBookStore.API\obj\Debug\net9.0\OnlineBookStore.API.csproj.CoreCompileInputs.cache
-C:\Users\payal\Desktop\deneme 1\backend\OnlineBookStore.API\obj\Debug\net9.0\OnlineBookStore.API.MvcApplicationPartsAssemblyInfo.cs
-C:\Users\payal\Desktop\deneme 1\backend\OnlineBookStore.API\obj\Debug\net9.0\OnlineBookStore.API.MvcApplicationPartsAssemblyInfo.cache
 C:\Users\payal\Desktop\deneme 1\backend\OnlineBookStore.API\bin\Debug\net9.0\appsettings.Development.json
 C:\Users\payal\Desktop\deneme 1\backend\OnlineBookStore.API\bin\Debug\net9.0\appsettings.json
 C:\Users\payal\Desktop\deneme 1\backend\OnlineBookStore.API\bin\Debug\net9.0\OnlineBookStore.API.staticwebassets.endpoints.json
@@ -151,6 +144,13 @@ C:\Users\payal\Desktop\deneme 1\backend\OnlineBookStore.API\bin\Debug\net9.0\run
 C:\Users\payal\Desktop\deneme 1\backend\OnlineBookStore.API\bin\Debug\net9.0\runtimes\win\lib\net6.0\System.Runtime.Caching.dll
 C:\Users\payal\Desktop\deneme 1\backend\OnlineBookStore.API\bin\Debug\net9.0\runtimes\win\lib\net6.0\System.Security.Cryptography.ProtectedData.dll
 C:\Users\payal\Desktop\deneme 1\backend\OnlineBookStore.API\bin\Debug\net9.0\runtimes\win\lib\net6.0\System.Windows.Extensions.dll
+C:\Users\payal\Desktop\deneme 1\backend\OnlineBookStore.API\obj\Debug\net9.0\OnlineBookStore.API.csproj.AssemblyReference.cache
+C:\Users\payal\Desktop\deneme 1\backend\OnlineBookStore.API\obj\Debug\net9.0\OnlineBookStore.API.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\payal\Desktop\deneme 1\backend\OnlineBookStore.API\obj\Debug\net9.0\OnlineBookStore.API.AssemblyInfoInputs.cache
+C:\Users\payal\Desktop\deneme 1\backend\OnlineBookStore.API\obj\Debug\net9.0\OnlineBookStore.API.AssemblyInfo.cs
+C:\Users\payal\Desktop\deneme 1\backend\OnlineBookStore.API\obj\Debug\net9.0\OnlineBookStore.API.csproj.CoreCompileInputs.cache
+C:\Users\payal\Desktop\deneme 1\backend\OnlineBookStore.API\obj\Debug\net9.0\OnlineBookStore.API.MvcApplicationPartsAssemblyInfo.cs
+C:\Users\payal\Desktop\deneme 1\backend\OnlineBookStore.API\obj\Debug\net9.0\OnlineBookStore.API.MvcApplicationPartsAssemblyInfo.cache
 C:\Users\payal\Desktop\deneme 1\backend\OnlineBookStore.API\obj\Debug\net9.0\scopedcss\bundle\OnlineBookStore.API.styles.css
 C:\Users\payal\Desktop\deneme 1\backend\OnlineBookStore.API\obj\Debug\net9.0\staticwebassets.build.json
 C:\Users\payal\Desktop\deneme 1\backend\OnlineBookStore.API\obj\Debug\net9.0\staticwebassets.development.json

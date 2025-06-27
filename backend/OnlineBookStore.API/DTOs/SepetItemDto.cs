@@ -8,5 +8,6 @@ namespace OnlineBookStore.API.DTOs
         public int Id { get; set; }
         public int KitapId { get; set; }
         public int Adet { get; set; }
+        public KitapDto? Kitap { get; set; }
     }
 } 

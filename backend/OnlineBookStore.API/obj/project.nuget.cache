@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "sSE6ljTpYZ8=",
+  "dgSpecHash": "0VGYUm+i/k8=",
   "success": true,
-  "projectFilePath": "C:\\Users\\payal\\Desktop\\deneme 1\\backend\\OnlineBookstore.API\\OnlineBookStore.API.csproj",
+  "projectFilePath": "C:\\Users\\payal\\Desktop\\deneme 1\\backend\\OnlineBookStore.API\\OnlineBookStore.API.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\payal\\.nuget\\packages\\azure.core\\1.38.0\\azure.core.1.38.0.nupkg.sha512",
     "C:\\Users\\payal\\.nuget\\packages\\azure.identity\\1.11.4\\azure.identity.1.11.4.nupkg.sha512",

@@ -4,6 +4,7 @@ using OnlineBookStore.API.DTOs;
 using OnlineBookStore.API.Mappers;
 using OnlineBookStore.API.Services;
 using System.Security.Claims;
+using OnlineBookStore.API.Models;
 
 namespace OnlineBookStore.API.Controllers
 {
@@ -14,11 +15,13 @@ namespace OnlineBookStore.API.Controllers
     {
         private readonly ISepetService _sepetService;
         private readonly ILogger<SepetController> _logger;
+        private readonly IKitapService _kitapService;
 
-        public SepetController(ISepetService sepetService, ILogger<SepetController> logger)
+        public SepetController(ISepetService sepetService, ILogger<SepetController> logger, IKitapService kitapService)
         {
             _sepetService = sepetService;
             _logger = logger;
+            _kitapService = kitapService;
         }
 
         /// <summary>
@@ -29,7 +32,19 @@ namespace OnlineBookStore.API.Controllers
         {
             var kullaniciId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
             var sepet = await _sepetService.GetByKullaniciIdAsync(kullaniciId);
-            return Ok(sepet.Select(SepetItemMapper.ToDto));
+            var kitapIdler = sepet.Select(s => s.KitapId).Distinct().ToList();
+            var kitaplar = new Dictionary<int, Kitap>();
+            foreach (var item in sepet)
+            {
+                if (!kitaplar.ContainsKey(item.KitapId))
+                {
+                    var kitap = await _kitapService.GetByIdAsync(item.KitapId);
+                    if (kitap != null)
+                        kitaplar[item.KitapId] = kitap;
+                }
+            }
+            var dtoList = sepet.Select(item => SepetItemMapper.ToDto(item, kitaplar.ContainsKey(item.KitapId) ? kitaplar[item.KitapId] : null));
+            return Ok(dtoList);
         }
 
         /// <summary>

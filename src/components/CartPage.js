@@ -1,9 +1,10 @@
 import React from 'react';
-import { useCart } from '../contexts/CartContext';
+import { Link } from 'react-router-dom';
+import { useCart } from '../context/CartContext';
 import styles from './CartPage.module.css';
 
 const CartPage = () => {
-  const { cartItems, removeFromCart } = useCart();
+  const { cartItems, removeFromCart, clearCart } = useCart();
 
   // Calculate total price
   const totalPrice = cartItems.reduce((total, item) => {
@@ -20,15 +21,11 @@ const CartPage = () => {
     }
   };
 
-  const handleCheckout = () => {
-    alert('Ödeme entegrasyonu henüz mevcut değil. (Payment integration not yet available)');
-  };
-
   if (cartItems.length === 0) {
     return (
       <div className={styles.cartContainer}>
         <h1 className={styles.cartTitle}>Sepetim</h1>
-        <div className={styles.emptyCart}>
+        <div className={styles.emptyCart} data-testid="empty-cart-message">
           <p>Sepetiniz boş.</p>
           <p>Kitap eklemek için ana sayfaya dönün.</p>
         </div>
@@ -42,7 +39,7 @@ const CartPage = () => {
       
       <div className={styles.cartItems}>
         {cartItems.map((item) => (
-          <div key={item.id} className={styles.cartItem}>
+          <div key={item.id} className={styles.cartItem} data-testid="cart-item">
             <div className={styles.itemImage}>
               <img 
                 src={item.coverId 
@@ -82,6 +79,7 @@ const CartPage = () => {
             <button 
               onClick={() => removeFromCart(item.id)}
               className={styles.removeButton}
+              data-testid="remove-button"
             >
               Kaldır
             </button>
@@ -95,12 +93,22 @@ const CartPage = () => {
           <span className={styles.totalPrice}>₺{totalPrice}</span>
         </div>
         
-        <button 
-          onClick={handleCheckout}
-          className={styles.checkoutButton}
-        >
-          Ödeme Yap
-        </button>
+        <div className={styles.cartActions}>
+          <button 
+            onClick={clearCart}
+            className={styles.clearCartButton}
+          >
+            Sepeti Temizle
+          </button>
+          
+          <Link 
+            to="/checkout"
+            className={styles.checkoutButton}
+            data-testid="checkout-button"
+          >
+            Ödeme Yap
+          </Link>
+        </div>
       </div>
     </div>
   );

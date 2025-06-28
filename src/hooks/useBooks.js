@@ -1,10 +1,11 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 
 const useBooks = (searchQuery, page = 1) => {
   const [books, setBooks] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
-  const [nextPageExists, setNextPageExists] = useState(false);
+  const [hasMore, setHasMore] = useState(false);
+  const [currentPage, setCurrentPage] = useState(page);
 
   useEffect(() => {
     // Don't fetch if search query is empty
@@ -12,7 +13,8 @@ const useBooks = (searchQuery, page = 1) => {
       setBooks([]);
       setLoading(false);
       setError(null);
-      setNextPageExists(false);
+      setHasMore(false);
+      setCurrentPage(1);
       return;
     }
 
@@ -22,7 +24,7 @@ const useBooks = (searchQuery, page = 1) => {
       
       try {
         const response = await fetch(
-          `https://openlibrary.org/search.json?q=${encodeURIComponent(searchQuery)}&page=${page}`
+          `https://openlibrary.org/search.json?q=${encodeURIComponent(searchQuery)}&page=${currentPage}`
         );
         
         if (!response.ok) {
@@ -42,14 +44,14 @@ const useBooks = (searchQuery, page = 1) => {
         }));
         
         // If it's page 1, replace books, otherwise append
-        if (page === 1) {
+        if (currentPage === 1) {
           setBooks(mappedBooks);
         } else {
           setBooks(prevBooks => [...prevBooks, ...mappedBooks]);
         }
         
-        // Check if next page exists (OpenLibrary returns 100 results per page)
-        setNextPageExists(data.docs.length === 100);
+        // Check if more results exist
+        setHasMore(data.docs.length > 0);
       } catch (err) {
         setError(err.message);
         setBooks([]);
@@ -59,9 +61,19 @@ const useBooks = (searchQuery, page = 1) => {
     };
 
     fetchBooks();
-  }, [searchQuery, page]);
+  }, [searchQuery, currentPage]);
 
-  return { books, loading, error, nextPageExists };
+  const loadMore = useCallback(() => {
+    setCurrentPage(prevPage => prevPage + 1);
+  }, []);
+
+  return { 
+    books, 
+    loading, 
+    error, 
+    loadMore, 
+    hasMore 
+  };
 };
 
 export default useBooks; 

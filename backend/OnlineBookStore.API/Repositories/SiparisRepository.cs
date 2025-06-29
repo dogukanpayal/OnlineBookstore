@@ -35,5 +35,15 @@ namespace OnlineBookStore.API.Repositories
             await _context.Siparisler.AddAsync(siparis);
             await _context.SaveChangesAsync();
         }
+
+        public async Task DeleteAsync(int id)
+        {
+            var siparis = await _context.Siparisler.Include(s => s.Kalemler).FirstOrDefaultAsync(s => s.Id == id);
+            if (siparis != null)
+            {
+                _context.Siparisler.Remove(siparis);
+                await _context.SaveChangesAsync();
+            }
+        }
     }
 } 

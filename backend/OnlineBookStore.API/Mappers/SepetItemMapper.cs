@@ -8,7 +8,7 @@ namespace OnlineBookStore.API.Mappers
     /// </summary>
     public static class SepetItemMapper
     {
-        public static SepetItemDto ToDto(SepetItem item, Kitap kitap = null)
+        public static SepetItemDto ToDto(SepetItem item, Kitap? kitap = null)
         {
             return new SepetItemDto
             {

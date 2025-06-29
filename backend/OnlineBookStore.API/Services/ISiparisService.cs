@@ -13,5 +13,6 @@ namespace OnlineBookStore.API.Services
         Task<IEnumerable<Siparis>> GetAllAsync(); // Admin için
         Task<Siparis> GetByIdAsync(int id);
         Task<Siparis> CreateAsync(int kullaniciId, List<(int kitapId, int adet, decimal fiyat)> kalemler);
+        Task DeleteAsync(int id);
     }
 } 

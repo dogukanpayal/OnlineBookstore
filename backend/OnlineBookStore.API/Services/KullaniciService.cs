@@ -51,7 +51,12 @@ namespace OnlineBookStore.API.Services
             // Sadece ad-soyad güncellenebilir
             // E-posta ve rol değiştirilemez
             // Şifre güncelleme için ayrı bir metot gerekir
-            _kullaniciRepository.UpdateAsync(kullanici);
+            await _kullaniciRepository.UpdateAsync(kullanici);
+        }
+
+        public async Task<List<Kullanici>> GetAllAsync()
+        {
+            return (await _kullaniciRepository.GetAllAsync()).ToList();
         }
 
         // Şifre hashleme için basit bir örnek (gerçek projede daha güvenli yöntemler kullanılmalı)

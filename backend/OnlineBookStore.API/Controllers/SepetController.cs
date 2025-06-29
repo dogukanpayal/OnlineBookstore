@@ -30,7 +30,11 @@ namespace OnlineBookStore.API.Controllers
         [HttpGet]
         public async Task<IActionResult> Get()
         {
-            var kullaniciId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
+            var kullaniciIdStr = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            if (string.IsNullOrEmpty(kullaniciIdStr))
+                return Unauthorized();
+            
+            var kullaniciId = int.Parse(kullaniciIdStr);
             var sepet = await _sepetService.GetByKullaniciIdAsync(kullaniciId);
             var kitapIdler = sepet.Select(s => s.KitapId).Distinct().ToList();
             var kitaplar = new Dictionary<int, Kitap>();
@@ -53,7 +57,11 @@ namespace OnlineBookStore.API.Controllers
         [HttpPost]
         public async Task<IActionResult> AddOrUpdate([FromBody] SepetItemDto dto)
         {
-            var kullaniciId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
+            var kullaniciIdStr = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            if (string.IsNullOrEmpty(kullaniciIdStr))
+                return Unauthorized();
+            
+            var kullaniciId = int.Parse(kullaniciIdStr);
             await _sepetService.AddOrUpdateAsync(kullaniciId, dto.KitapId, dto.Adet);
             return Ok();
         }
@@ -74,7 +82,11 @@ namespace OnlineBookStore.API.Controllers
         [HttpDelete]
         public async Task<IActionResult> DeleteAll()
         {
-            var kullaniciId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
+            var kullaniciIdStr = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            if (string.IsNullOrEmpty(kullaniciIdStr))
+                return Unauthorized();
+            
+            var kullaniciId = int.Parse(kullaniciIdStr);
             await _sepetService.DeleteAllAsync(kullaniciId);
             return NoContent();
         }

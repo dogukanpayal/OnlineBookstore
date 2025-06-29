@@ -11,9 +11,9 @@ namespace OnlineBookStore.API.Controllers
     {
         private readonly IKullaniciService _kullaniciService;
         private readonly ILogger<AuthController> _logger;
-        private readonly TokenService _tokenService;
+        private readonly ITokenService _tokenService;
 
-        public AuthController(IKullaniciService kullaniciService, ILogger<AuthController> logger, TokenService tokenService)
+        public AuthController(IKullaniciService kullaniciService, ILogger<AuthController> logger, ITokenService tokenService)
         {
             _kullaniciService = kullaniciService;
             _logger = logger;
@@ -47,7 +47,7 @@ namespace OnlineBookStore.API.Controllers
             try
             {
                 var kullanici = await _kullaniciService.LoginAsync(dto.Email, dto.Sifre);
-                var token = _tokenService.GenerateToken(kullanici);
+                var token = _tokenService.CreateToken(kullanici);
                 return Ok(new { kullanici = KullaniciMapper.ToDto(kullanici), token });
             }
             catch (Exception ex)

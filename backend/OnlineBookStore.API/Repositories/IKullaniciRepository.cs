@@ -12,5 +12,6 @@ namespace OnlineBookStore.API.Repositories
         Task AddAsync(Kullanici kullanici);
         Task<bool> AnyByEmailAsync(string email);
         Task UpdateAsync(Models.Kullanici kullanici);
+        Task<IEnumerable<Kullanici>> GetAllAsync();
     }
 } 

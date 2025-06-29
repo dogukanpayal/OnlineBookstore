@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using OnlineBookStore.API.DTOs;
 using OnlineBookStore.API.Mappers;
 using OnlineBookStore.API.Services;
+using System.Security.Claims;
 
 namespace OnlineBookStore.API.Controllers
 {
@@ -17,6 +18,57 @@ namespace OnlineBookStore.API.Controllers
         {
             _kitapService = kitapService;
             _logger = logger;
+        }
+
+        /// <summary>
+        /// Debug: Token bilgilerini gösterir
+        /// </summary>
+        [HttpGet("debug-token")]
+        [Authorize]
+        public IActionResult DebugToken()
+        {
+            try
+            {
+                var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+                var userName = User.FindFirst(ClaimTypes.Name)?.Value;
+                var userEmail = User.FindFirst(ClaimTypes.Email)?.Value;
+                var userRole = User.FindFirst(ClaimTypes.Role)?.Value;
+                var isInRole = User.IsInRole("Admin");
+                var isAuthenticated = User.Identity?.IsAuthenticated;
+                var authenticationType = User.Identity?.AuthenticationType;
+
+                return Ok(new
+                {
+                    success = true,
+                    userId,
+                    userName,
+                    userEmail,
+                    userRole,
+                    isInRole,
+                    isAuthenticated,
+                    authenticationType,
+                    allClaims = User.Claims.Select(c => new { c.Type, c.Value }).ToList()
+                });
+            }
+            catch (Exception ex)
+            {
+                return Ok(new
+                {
+                    success = false,
+                    error = ex.Message,
+                    stackTrace = ex.StackTrace
+                });
+            }
+        }
+
+        /// <summary>
+        /// Debug: Token olmadan test endpoint'i
+        /// </summary>
+        [HttpGet("debug-no-auth")]
+        [AllowAnonymous]
+        public IActionResult DebugNoAuth()
+        {
+            return Ok(new { message = "Bu endpoint authentication gerektirmiyor" });
         }
 
         /// <summary>
@@ -74,7 +126,6 @@ namespace OnlineBookStore.API.Controllers
         /// </summary>
         [AllowAnonymous]
         [HttpGet("{id}")]
-        [Authorize]
         public async Task<IActionResult> GetById(int id)
         {
             var kitap = await _kitapService.GetByIdAsync(id);

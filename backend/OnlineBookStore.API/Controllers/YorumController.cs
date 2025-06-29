@@ -41,7 +41,11 @@ namespace OnlineBookStore.API.Controllers
         {
             try
             {
-                var kullaniciId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
+                var kullaniciIdStr = User.FindFirstValue(ClaimTypes.NameIdentifier);
+                if (string.IsNullOrEmpty(kullaniciIdStr))
+                    return Unauthorized();
+                
+                var kullaniciId = int.Parse(kullaniciIdStr);
                 var yorum = YorumMapper.ToModel(dto);
                 yorum.KullaniciId = kullaniciId;
                 yorum.Tarih = DateTime.Now;
@@ -65,7 +69,11 @@ namespace OnlineBookStore.API.Controllers
             try
             {
                 var yorum = await _yorumService.GetByIdAsync(id);
-                var kullaniciId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
+                var kullaniciIdStr = User.FindFirstValue(ClaimTypes.NameIdentifier);
+                if (string.IsNullOrEmpty(kullaniciIdStr))
+                    return Unauthorized();
+                
+                var kullaniciId = int.Parse(kullaniciIdStr);
                 var rol = User.FindFirstValue(ClaimTypes.Role);
                 if (yorum == null || (yorum.KullaniciId != kullaniciId && rol != "Admin"))
                     return Forbid();

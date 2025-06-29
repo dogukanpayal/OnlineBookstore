@@ -42,5 +42,10 @@ namespace OnlineBookStore.API.Repositories
             _context.Kullanicilar.Update(kullanici);
             await _context.SaveChangesAsync();
         }
+
+        public async Task<IEnumerable<Kullanici>> GetAllAsync()
+        {
+            return await _context.Kullanicilar.ToListAsync();
+        }
     }
 } 

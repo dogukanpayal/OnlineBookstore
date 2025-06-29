@@ -4,6 +4,7 @@ using Microsoft.IdentityModel.Tokens;
 using OnlineBookStore.API.Data;
 using OnlineBookStore.API.Repositories;
 using OnlineBookStore.API.Services;
+using OnlineBookStore.API.Models;
 using System.Text;
 using Microsoft.OpenApi.Models;
 
@@ -22,7 +23,7 @@ builder.Services.AddScoped<ISepetRepository, SepetRepository>();
 builder.Services.AddScoped<ISepetService, SepetService>();
 builder.Services.AddScoped<ISiparisRepository, SiparisRepository>();
 builder.Services.AddScoped<ISiparisService, SiparisService>();
-builder.Services.AddSingleton<TokenService>();
+builder.Services.AddScoped<OnlineBookStore.API.Services.ITokenService, OnlineBookStore.API.Services.TokenService>();
 builder.Services.AddScoped<IYorumRepository, YorumRepository>();
 builder.Services.AddScoped<IYorumService, YorumService>();
 
@@ -67,6 +68,13 @@ builder.Services.AddSwaggerGen(c =>
     });
 });
 
+// JWT config logu
+var jwtSettings = builder.Configuration.GetSection("Jwt").Get<OnlineBookStore.API.Models.JwtSettings>();
+Console.WriteLine($"[Program.cs] JWT Key: {jwtSettings.Key}");
+Console.WriteLine($"[Program.cs] JWT Issuer: {jwtSettings.Issuer}");
+Console.WriteLine($"[Program.cs] JWT Audience: {jwtSettings.Audience}");
+builder.Services.AddSingleton(jwtSettings);
+
 // JWT Authentication
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
@@ -77,9 +85,23 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             ValidateAudience = true,
             ValidateLifetime = true,
             ValidateIssuerSigningKey = true,
-            ValidIssuer = builder.Configuration["Jwt:Issuer"],
-            ValidAudience = builder.Configuration["Jwt:Audience"],
-            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]))
+            ValidIssuer = jwtSettings.Issuer,
+            ValidAudience = jwtSettings.Audience,
+            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSettings.Key))
+        };
+        
+        options.Events = new JwtBearerEvents
+        {
+            OnAuthenticationFailed = context =>
+            {
+                Console.WriteLine($"[JWT Debug] Authentication failed: {context.Exception.Message}");
+                return Task.CompletedTask;
+            },
+            OnTokenValidated = context =>
+            {
+                Console.WriteLine($"[JWT Debug] Token validated successfully");
+                return Task.CompletedTask;
+            }
         };
     });
 

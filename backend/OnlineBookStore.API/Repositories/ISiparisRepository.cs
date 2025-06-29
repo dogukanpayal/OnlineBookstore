@@ -11,5 +11,6 @@ namespace OnlineBookStore.API.Repositories
         Task<IEnumerable<Siparis>> GetAllAsync(); // Admin için
         Task<Siparis> GetByIdAsync(int id);
         Task AddAsync(Siparis siparis);
+        Task DeleteAsync(int id);
     }
 } 

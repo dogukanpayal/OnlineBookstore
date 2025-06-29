@@ -10,17 +10,33 @@ namespace OnlineBookStore.API.Services
     /// <summary>
     /// JWT token üretimi için servis.
     /// </summary>
-    public class TokenService
+    public interface ITokenService
+    {
+        string CreateToken(Kullanici kullanici);
+    }
+
+    public class TokenService : ITokenService
     {
         private readonly IConfiguration _configuration;
-        public TokenService(IConfiguration configuration)
+        private readonly JwtSettings _jwtSettings;
+
+        public TokenService(IConfiguration configuration, JwtSettings jwtSettings)
         {
             _configuration = configuration;
+            _jwtSettings = jwtSettings;
         }
 
-        public string GenerateToken(Kullanici kullanici)
+        public string CreateToken(Kullanici kullanici)
         {
-            var claims = new[]
+            // LOG: Kullanılan JWT ayarlarını konsola yaz
+            var key = _jwtSettings.Key;
+            var issuer = _jwtSettings.Issuer;
+            var audience = _jwtSettings.Audience;
+            Console.WriteLine($"[TokenService] JWT Key: {key}");
+            Console.WriteLine($"[TokenService] JWT Issuer: {issuer}");
+            Console.WriteLine($"[TokenService] JWT Audience: {audience}");
+
+            var claims = new List<Claim>
             {
                 new Claim(ClaimTypes.NameIdentifier, kullanici.Id.ToString()),
                 new Claim(ClaimTypes.Name, kullanici.AdSoyad),
@@ -28,12 +44,12 @@ namespace OnlineBookStore.API.Services
                 new Claim(ClaimTypes.Role, kullanici.Rol)
             };
 
-            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:Key"]));
-            var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
+            var keyBytes = new SymmetricSecurityKey(System.Text.Encoding.UTF8.GetBytes(key));
+            var creds = new SigningCredentials(keyBytes, SecurityAlgorithms.HmacSha256);
 
             var token = new JwtSecurityToken(
-                issuer: _configuration["Jwt:Issuer"],
-                audience: _configuration["Jwt:Audience"],
+                issuer: issuer,
+                audience: audience,
                 claims: claims,
                 expires: DateTime.Now.AddHours(2),
                 signingCredentials: creds

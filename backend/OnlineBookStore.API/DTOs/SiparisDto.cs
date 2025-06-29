@@ -9,9 +9,11 @@ namespace OnlineBookStore.API.DTOs
     public class SiparisDto
     {
         public int Id { get; set; }
-        public DateTime Tarih { get; set; }
+        public DateTime SiparisTarihi { get; set; }
         public decimal ToplamTutar { get; set; }
-        public List<SiparisKalemDto> Kalemler { get; set; }
+        public List<SiparisKalemDto> SiparisDetaylari { get; set; }
+        public int KullaniciId { get; set; }
+        public string KullaniciAdSoyad { get; set; }
     }
 
     /// <summary>
@@ -19,8 +21,10 @@ namespace OnlineBookStore.API.DTOs
     /// </summary>
     public class SiparisKalemDto
     {
+        public int Id { get; set; }
         public int KitapId { get; set; }
         public int Adet { get; set; }
         public decimal Fiyat { get; set; }
+        public KitapDto Kitap { get; set; }
     }
 } 

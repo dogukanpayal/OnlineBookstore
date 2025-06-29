@@ -16,11 +16,13 @@ namespace OnlineBookStore.API.Controllers
         private readonly ISiparisService _siparisService;
         private readonly ISepetService _sepetService;
         private readonly ILogger<SiparisController> _logger;
+        private readonly IKitapService _kitapService;
 
-        public SiparisController(ISiparisService siparisService, ISepetService sepetService, ILogger<SiparisController> logger)
+        public SiparisController(ISiparisService siparisService, ISepetService sepetService, IKitapService kitapService, ILogger<SiparisController> logger)
         {
             _siparisService = siparisService;
             _sepetService = sepetService;
+            _kitapService = kitapService;
             _logger = logger;
         }
 
@@ -32,7 +34,8 @@ namespace OnlineBookStore.API.Controllers
         {
             var kullaniciId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
             var siparisler = await _siparisService.GetByKullaniciIdAsync(kullaniciId);
-            return Ok(siparisler.Select(SiparisMapper.ToDto));
+            var kitaplar = (await _kitapService.GetAllAsync()).ToList();
+            return Ok(siparisler.Select(s => SiparisMapper.ToDto(s, kitaplar)));
         }
 
         /// <summary>
@@ -43,7 +46,10 @@ namespace OnlineBookStore.API.Controllers
         public async Task<IActionResult> GetAll()
         {
             var siparisler = await _siparisService.GetAllAsync();
-            return Ok(siparisler.Select(SiparisMapper.ToDto));
+            var kitaplar = (await _kitapService.GetAllAsync()).ToList();
+            var kullaniciService = (IKullaniciService)HttpContext.RequestServices.GetService(typeof(IKullaniciService));
+            var kullanicilar = await kullaniciService.GetAllAsync();
+            return Ok(siparisler.Select(s => SiparisMapper.ToDto(s, kitaplar, kullanicilar)));
         }
 
         /// <summary>
@@ -58,16 +64,32 @@ namespace OnlineBookStore.API.Controllers
                 var sepet = await _sepetService.GetByKullaniciIdAsync(kullaniciId);
                 if (!sepet.Any())
                     return BadRequest(new { hata = "Sepetiniz boş." });
-                var kalemler = sepet.Select(s => (s.KitapId, s.Adet, 0m)).ToList(); // Fiyatı kitap tablosundan çekmek için güncellenebilir
+                var kitaplar = (await _kitapService.GetAllAsync()).ToList();
+                var kalemler = sepet.Select(s => {
+                    var kitap = kitaplar.FirstOrDefault(k => k.Id == s.KitapId);
+                    var fiyat = kitap != null ? kitap.Fiyat : 0m;
+                    return (s.KitapId, s.Adet, fiyat);
+                }).ToList();
                 var siparis = await _siparisService.CreateAsync(kullaniciId, kalemler);
                 await _sepetService.DeleteAllAsync(kullaniciId);
-                return Ok(SiparisMapper.ToDto(siparis));
+                return Ok(SiparisMapper.ToDto(siparis, kitaplar));
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex, "Sipariş oluşturma hatası");
                 return BadRequest(new { hata = ex.Message });
             }
+        }
+
+        /// <summary>
+        /// Siparişi siler (Sadece Admin).
+        /// </summary>
+        [HttpDelete("{id}")]
+        [Authorize(Roles = "Admin")]
+        public async Task<IActionResult> Delete(int id)
+        {
+            await _siparisService.DeleteAsync(id);
+            return NoContent();
         }
     }
 } 

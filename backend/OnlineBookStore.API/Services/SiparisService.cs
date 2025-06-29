@@ -49,5 +49,10 @@ namespace OnlineBookStore.API.Services
             await _siparisRepository.AddAsync(siparis);
             return siparis;
         }
+
+        public async Task DeleteAsync(int id)
+        {
+            await _siparisRepository.DeleteAsync(id);
+        }
     }
 } 

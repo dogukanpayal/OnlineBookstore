@@ -11,5 +11,6 @@ namespace OnlineBookStore.API.Services
         Task<Kullanici> LoginAsync(string email, string sifre);
         Task<Kullanici> GetByIdAsync(int id);
         Task UpdateAsync(Models.Kullanici kullanici);
+        Task<List<Kullanici>> GetAllAsync();
     }
 } 

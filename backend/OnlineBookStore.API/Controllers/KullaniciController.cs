@@ -101,5 +101,60 @@ namespace OnlineBookStore.API.Controllers
 
             return NoContent();
         }
+
+        /// <summary>
+        /// Tüm kullanıcıları listeler (Sadece Admin).
+        /// </summary>
+        [HttpGet]
+        [Authorize(Roles = "Admin")]
+        public IActionResult GetAll()
+        {
+            var kullanicilar = _context.Kullanicilar
+                .Select(k => new KullaniciDto {
+                    Id = k.Id,
+                    AdSoyad = k.AdSoyad,
+                    Email = k.Email,
+                    Rol = k.Rol
+                }).ToList();
+            return Ok(kullanicilar);
+        }
+
+        /// <summary>
+        /// Belirli bir kullanıcıyı siler (Sadece Admin).
+        /// </summary>
+        [HttpDelete("{id}")]
+        [Authorize(Roles = "Admin")]
+        public IActionResult Delete(int id)
+        {
+            var kullanici = _context.Kullanicilar.FirstOrDefault(k => k.Id == id);
+            if (kullanici == null)
+                return NotFound();
+            _context.Kullanicilar.Remove(kullanici);
+            _context.SaveChanges();
+            return NoContent();
+        }
+
+        /// <summary>
+        /// Belirli bir kullanıcıyı günceller (Sadece Admin).
+        /// </summary>
+        [HttpPut("{id}")]
+        [Authorize(Roles = "Admin")]
+        public IActionResult Update(int id, [FromBody] KullaniciDto dto)
+        {
+            var kullanici = _context.Kullanicilar.FirstOrDefault(k => k.Id == id);
+            if (kullanici == null)
+                return NotFound();
+            kullanici.AdSoyad = dto.AdSoyad;
+            kullanici.Email = dto.Email;
+            kullanici.Rol = dto.Rol;
+            _context.SaveChanges();
+            return Ok(new KullaniciDto
+            {
+                Id = kullanici.Id,
+                AdSoyad = kullanici.AdSoyad,
+                Email = kullanici.Email,
+                Rol = kullanici.Rol
+            });
+        }
     }
 } 
